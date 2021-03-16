@@ -13,6 +13,22 @@ async function getAccounts(req, res){
     }
 }
 
+async function getAccountsById(req, res){
+    try{
+        const id = req.params.id
+        
+        const data = await accountsModel.findById(req.params.id)
+        
+
+        return res.send([data])
+    }
+    catch(err){
+        const data = await accountsModel.find()
+
+        return res.send(data)
+    }
+}
+
 async function createAccount(req, res){
     try {
 
@@ -72,4 +88,4 @@ async function deleteAccount(req, res){
     
 }
 
-module.exports = {getAccounts, createAccount, updateAccount, deleteAccount}
+module.exports = {getAccounts, createAccount, updateAccount, deleteAccount, getAccountsById}
