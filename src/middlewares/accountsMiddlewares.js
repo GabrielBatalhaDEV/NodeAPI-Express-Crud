@@ -1,4 +1,4 @@
-const { findByIdAndDelete } = require("./../models/accounstModel")
+
 const accountsModel = require("./../models/accounstModel")
 
 
@@ -23,9 +23,19 @@ async function getAccountsById(req, res){
         return res.send([data])
     }
     catch(err){
-        const data = await accountsModel.find()
+        return res.status(400).send("Error on getting account")
+    }
+}
+
+async function getAccountByTitle(req, res){
+    try {
+        const title = req.params.title
+
+        const data = await accountsModel.find({title})
 
         return res.send(data)
+    } catch (error) {
+        res.status(400).send("Error on getting account by title")
     }
 }
 
@@ -88,4 +98,4 @@ async function deleteAccount(req, res){
     
 }
 
-module.exports = {getAccounts, createAccount, updateAccount, deleteAccount, getAccountsById}
+module.exports = {getAccounts, createAccount, updateAccount, deleteAccount, getAccountsById, getAccountByTitle}
