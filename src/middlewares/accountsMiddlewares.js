@@ -20,7 +20,7 @@ async function getAccountsById(req, res){
         const data = await accountsModel.findById(req.params.id)
         
 
-        return res.send([data])
+        return res.send(data)
     }
     catch(err){
         return res.status(400).send("Error on getting account")
@@ -66,15 +66,14 @@ async function updateAccount(req, res){
         if(!account){
             return res.status(400).send("Accounts ID is incorrect")
         }
-
-        const {title, username, password, email, extras} = req.body
-        await accountsModel.findOneAndUpdate(id,{
+        
+        const {title, username, password, email} = req.body
+        await accountsModel.findByIdAndUpdate(id,{
             title,
             username,
             password,
-            email,
-            extras
-        })
+            email
+        },{new: false})
 
         return res.sendStatus(200)
     } catch (error) {
